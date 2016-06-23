@@ -8,7 +8,7 @@ categories: iOS
 `AVAssetResourceLoaderDeleagte`는 custom protocol을 통해 재생하고자 하는 미디어파일을 받아올 때 사용하는 `AVURLAsset`의 프로퍼티이다.
 이 프로퍼티가 설정된 상태에서 `test://{MOVIE_FILE}`과 같은 custom protocol 주소의 미디어 재생 요청이 들어오면 
 
-```
+{% highlight objc %}
 id<AVAssetResourceLoaderDelegate> loaderDelegate = ...;
 
 NSURL * url = [NSURL URLWithString:@"aaa://techslides.com/demos/sample-videos/small.mp4"];
@@ -17,25 +17,25 @@ AVURLAsset * asset = [AVURLAsset assetWithURL:url];
 AVPlayerItem * item = [[AVPlayerItem alloc] initWithAsset:asset];
 AVPlayer * player = [AVPlayer playerWithPlayerItem:item];
 
-```
+{% endhighlight %}
 
 `AVAssetResourceLoaderDelegate` 프로토콜을 구현한 객체에 `AVAssetResourceLoadingRequest`를 전달하여 재생에 필요한 미디어 조각을 요청한다.
 
 
-```
+{% highlight objc %}
 - (BOOL)resourceLoader:(AVAssetResourceLoader *)resourceLoader shouldWaitForLoadingOfRequestedResource:(AVAssetResourceLoadingRequest *)loadingRequest {
 	...
 }
-```
+{% endhighlight %}
 
 만약, 이미 요청한 미디어 조각이 더이상 필요없게 되었을 경우(ex.이미 다른 요청으로 받았거나 재생 취소가 되었을 때 등)에는 아래 메서드가 호출되어 해당하는 미디어 조각을 더이상 받지 말 것을 요청한다.
 
 
-```
+{% highlight objc %}
 - (void)resourceLoader:(AVAssetResourceLoader *)resourceLoader didCancelLoadingRequest:(AVAssetResourceLoadingRequest *)loadingRequest {
 	...
 }
-```
+{% endhighlight %}
 
 
 이 방법은 AVPlayer가 원격에 위치한 미디어 파일을 받아서 재생하기 전에 직접 네트워크 요청을 핸들링할 수 있기 때문에 미디어파일을 캐싱하는데 사용할 수도 있다. 
@@ -43,7 +43,7 @@ AVPlayer * player = [AVPlayer playerWithPlayerItem:item];
 > 주의할 점! 일반적인 프로토콜로 된 미디어를 요청할 경우(ex. http://{MEDIA_URL}) `AVAssetResourceLoaderDelegate`를 구현한 객체가 프로퍼티로 설정되어 있더라도 실제로 delegate method 들이 호출되지는 않는다. 
 
 
-```
+{% highlight objc %}
 - (BOOL)resourceLoader:(AVAssetResourceLoader *)resourceLoader shouldWaitForLoadingOfRequestedResource:(AVAssetResourceLoadingRequest *)loadingRequest
 {
     NSMutableURLRequest * request = loadingRequest.request.mutableCopy;
@@ -124,7 +124,7 @@ AVPlayer * player = [AVPlayer playerWithPlayerItem:item];
     [request finishLoading];
     [self removeRequest:request];
 }
-```
+{% endhighlight %}
 
 
 **문제는 `resourceLoader:didCancelLoadingRequest:`가 시뮬레이터와는 달리 디바이스에서는 절대로 호출되지 않는다.**
