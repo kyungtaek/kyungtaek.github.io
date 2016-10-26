@@ -5,7 +5,7 @@ date:   2016-06-23 10:49:00
 categories: iOS
 ---
 
-{% highlight objc %}
+```objc
 
 #import "UIResponder+FirstResponder.h"
 
@@ -25,7 +25,7 @@ static __weak id currentFirstResponder;
 
 @end
 
-{% endhighlight %}
+```
 
 
 from [Stackoverflow.com](http://stackoverflow.com/questions/5029267/is-there-any-way-of-asking-an-ios-view-which-of-its-children-has-first-responder/14135456#14135456)
